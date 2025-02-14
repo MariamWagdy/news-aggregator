@@ -15,7 +15,7 @@ class NewsPlatformsSeeder extends Seeder
         NewsPlatform::insert([
             ['name' => 'NewsAPI.org', 'api_identifier' => 'NEWSAPI', 'url' => 'https://newsapi.org/', 'api_url' => 'https://newsapi.org/v2/top-headlines'],
             ['name' => 'The Guardian', 'api_identifier' => 'GUARDIAN', 'url' => 'https://www.theguardian.com/international', 'api_url' => 'https://content.guardianapis.com/search'],
-            ['name' => 'New York Times', 'api_identifier' => 'NYT', 'url' => 'https://www.nytimes.com/', 'api_url' => 'https://api.nytimes.com/svc/topstories/v2/'],
+            ['name' => 'New York Times', 'api_identifier' => 'NYT', 'url' => 'https://www.nytimes.com/', 'api_url' => 'https://api.nytimes.com/svc/news/v3/content/all/all.json'],
         ]);
     }
 }
