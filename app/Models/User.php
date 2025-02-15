@@ -46,4 +46,19 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function preferredCategories()
+    {
+        return $this->belongsToMany(NewsCategory::class, 'user_preferred_categories', 'user_id', 'category_id')->withTimestamps();
+    }
+
+    public function preferredAuthors()
+    {
+        return $this->hasMany(UserPreferredAuthor::class);
+    }
+
+    public function preferredSources()
+    {
+        return $this->hasMany(UserPreferredSource::class);
+    }
 }
