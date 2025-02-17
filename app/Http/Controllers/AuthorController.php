@@ -20,7 +20,10 @@ class AuthorController extends Controller
     public function index(Request $request)
     {
         try {
-            $authors = NewsArticle::select('author')->distinct()->get();
+            $authors = NewsArticle::select('author')
+                ->whereNotNull('author')
+                ->where('author', '!=', '')
+                ->distinct()->get();
 
             if ($authors->isEmpty()) {
                 return $this->successResponse('No authors found.', []);
