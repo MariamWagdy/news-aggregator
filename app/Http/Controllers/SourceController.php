@@ -20,7 +20,10 @@ class SourceController extends Controller
     public function index(Request $request)
     {
         try {
-            $sources = NewsArticle::select('source')->distinct()->get();
+            $sources = NewsArticle::select('source')
+                ->whereNotNull('source')
+                ->where('source', '!=', '')
+                ->distinct()->get();
 
             if ($sources->isEmpty()) {
                 return $this->successResponse('No sources found.', []);
