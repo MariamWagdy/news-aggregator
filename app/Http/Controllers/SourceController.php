@@ -19,17 +19,8 @@ class SourceController extends Controller
      */
     public function index(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'per_page' => 'sometimes|integer|min:1|max:100'
-        ]);
-
-        if ($validator->fails()) {
-            return $this->errorResponse('Invalid parameters.', $validator->errors(), 422);
-        }
-
         try {
-            $perPage = $request->query('per_page', 10);
-            $sources = NewsArticle::select('source')->distinct()->paginate($perPage);
+            $sources = NewsArticle::select('source')->distinct()->get();
 
             if ($sources->isEmpty()) {
                 return $this->successResponse('No sources found.', []);
