@@ -19,17 +19,8 @@ class CategoryController extends Controller
      */
     public function index(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'per_page' => 'sometimes|integer|min:1|max:100'
-        ]);
-
-        if ($validator->fails()) {
-            return $this->errorResponse('Invalid parameters.', $validator->errors(), 422);
-        }
-
         try {
-            $perPage = $request->query('per_page', 10);
-            $categories = NewsCategory::select('id', 'name')->paginate($perPage);
+            $categories = NewsCategory::select('id', 'name')->get();
 
             if ($categories->isEmpty()) {
                 return $this->successResponse('No categories found.', []);

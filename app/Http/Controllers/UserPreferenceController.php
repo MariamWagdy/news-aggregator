@@ -20,7 +20,7 @@ class UserPreferenceController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function updatePreferences(UpdateUserPreferencesRequest $request)
+    public function updatePreferences(UpdateUserPreferencesRequest $request) :JsonResponse
     {
         $user = $request->user();
 

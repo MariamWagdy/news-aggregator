@@ -29,8 +29,14 @@ class NewsArticle extends Model
 
     public function category()
     {
-        return $this->belongsTo(NewsCategory::class);
+        return $this->belongsTo(NewsCategory::class, 'category');
     }
+
+    public function platform()
+    {
+        return $this->belongsTo(NewsPlatform::class, 'platform');
+    }
+
 
     protected static function boot()
     {

@@ -12,4 +12,9 @@ class NewsPlatform extends Model
     protected $table = 'news_platforms';
 
     protected $fillable = ['name', 'api_identifier', 'url', 'api_url'];
+
+    public function articles(): HasMany
+    {
+        return $this->hasMany(NewsArticle::class, 'platform_id');
+    }
 }

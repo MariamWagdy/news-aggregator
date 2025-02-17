@@ -9,6 +9,8 @@ class ArticleService
 {
     public function getArticles(array $filters, int $perPage = 10): LengthAwarePaginator
     {
-        return NewsArticle::filter($filters)->paginate($perPage);
+        return NewsArticle
+            ::with(['category:id,name', 'platform:id,name,url'])
+            ->filter($filters)->paginate($perPage);
     }
 }

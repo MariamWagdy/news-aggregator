@@ -7,9 +7,13 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
+use App\Traits\ApiResponse;
 
 class AuthController extends Controller
 {
+    use ApiResponse;
+
+
     // Register a new user
     public function register(Request $request)
     {
@@ -25,10 +29,12 @@ class AuthController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
-        return response()->json([
-            'message' => 'User registered successfully',
-            'user' => $user
-        ], 201);
+        $token = $user->createToken('auth_token')->plainTextToken;
+
+        return $this->successResponse('User registered successfully', [
+            'token' => $token,
+            'user' => $user,
+        ]);
     }
 
     // Login user and return token
@@ -48,13 +54,13 @@ class AuthController extends Controller
 
         $user = Auth::user();
         $user->tokens()->delete();
-        $token = $user->createToken('authToken', ['*'], now()->addWeek())->plainTextToken;
-        return response()->json([
-            'success' => true,
-            'message' => 'Login successful',
+
+        $token = $user->createToken('auth_token', ['*'], now()->addWeek())->plainTextToken;
+
+        return $this->successResponse('Login successful', [
             'token' => $token,
             'user' => $user
-        ], 200);
+        ]);
     }
 
     // Logout user
@@ -62,10 +68,7 @@ class AuthController extends Controller
     {
         $request->user()->currentAccessToken()->delete();
 
-        return response()->json([
-            'success' => true,
-            'message' => 'Logged out successfully'
-        ], 200);
+        return $this->successResponse('Logged out successfully');
     }
-    
+
 }

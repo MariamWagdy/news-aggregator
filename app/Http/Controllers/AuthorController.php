@@ -19,17 +19,8 @@ class AuthorController extends Controller
      */
     public function index(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'per_page' => 'sometimes|integer|min:1|max:100'
-        ]);
-
-        if ($validator->fails()) {
-            return $this->errorResponse('Invalid parameters.', $validator->errors(), 422);
-        }
-
         try {
-            $perPage = $request->query('per_page', 10);
-            $authors = NewsArticle::select('author')->distinct()->paginate($perPage);
+            $authors = NewsArticle::select('author')->distinct()->get();
 
             if ($authors->isEmpty()) {
                 return $this->successResponse('No authors found.', []);
