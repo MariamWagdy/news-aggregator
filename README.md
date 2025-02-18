@@ -34,12 +34,33 @@ chmod -R 777 database/database.sqlite storage bootstrap/cache
 docker compose up -d --build
 ```
 
-### 5️⃣ Run Migrations
+### 5️⃣ Run Migrations and Seed Database
 ```bash
-docker compose exec app php artisan migrate
+docker compose exec app php artisan migrate --seed
 ```
 
-### 6️⃣ Access the Application
+### 6️⃣ Run Scheduled Commands Once
+To manually trigger the scheduled tasks once after starting Docker, run:
+```bash
+docker compose exec app php artisan news:fetch
+```
+
+To process scheduled jobs manually:
+```bash
+docker compose exec app php artisan schedule:run
+```
+
+To check upcoming scheduled commands:
+```bash
+docker compose exec app php artisan schedule:list
+```
+
+To start a background worker for scheduled tasks:
+```bash
+docker compose exec app php artisan schedule:work
+```
+
+### 7️⃣ Access the Application
 Visit [http://localhost:8000](http://localhost:8000) in your browser.
 
 ## 🛑 Stopping the Containers
@@ -76,5 +97,5 @@ docker compose down
 - **Do NOT commit `database.sqlite` or `.env`** to Git. They are environment-specific.
 - If running on **Windows**, ensure your project path is mounted correctly.
 
-🚀 Now your Laravel app is fully Dockerized with SQLite! 🎉
+🚀 Now your Laravel app is fully Dockerized with SQLite and scheduled tasks ready to run! 🎉
 
